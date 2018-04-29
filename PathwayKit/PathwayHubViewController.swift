@@ -10,32 +10,32 @@ import Foundation
 
 // A contract used to allow child destinations to gain access back to the controlling
 // router
-protocol DestinationViewController {
+public protocol DestinationViewController {
 	var hubController: PathwayRouter! { set get }
 }
 
 // The Pathway hub controller is intended to be used in situations where the child views
 // need to control the navigation
-class PathwayHubViewController: PathViewController {
+public class PathwayHubViewController: PathViewController {
 	
 	// Oppurtunity to pass information to the controller
-	override func willPresent(_ viewController: UIViewController) {
+	override open func willPresent(_ viewController: UIViewController) {
 		guard var viewController = viewController as? DestinationViewController else {
 			return
 		}
 		viewController.hubController = self
 	}
 	
-	override func didPresent(_ viewController: UIViewController) {
+	override open func didPresent(_ viewController: UIViewController) {
 		
 	}
 	
 	// Oppurtunity to grab information from the controller
-	override func willUnpresent(_ viewController: UIViewController) {
+	override open func willUnpresent(_ viewController: UIViewController) {
 		
 	}
 	
-	override func didUnpresent(_ viewController: UIViewController) {
+	override open func didUnpresent(_ viewController: UIViewController) {
 		guard var viewController = viewController as? DestinationViewController else {
 			return
 		}

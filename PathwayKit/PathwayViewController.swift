@@ -9,37 +9,32 @@
 import Foundation
 
 // A destination identifer - ie segue
-struct PathwayDestination: Hashable {
+public struct PathwayDestination: Hashable {
 	let identifier: String
 }
 
 // A router between pathways
-protocol PathwayRouter {
+public protocol PathwayRouter {
 	func navigate(to: PathwayDestination)
 }
-
-//extension PathwayDestination {
-//	static let navigationContoller = PathwayDestination(identifier: "ToNavigationView")
-//	static let tabController = PathwayDestination(identifier: "ToTabView")
-//}
 
 // The primary pathway view controller, which also acts as the pathway router
 // This is a really good place to start for implementations who wish for the
 // parent view controller to control the navigation
-class PathViewController: UIViewController, PathwayRouter {
+open class PathViewController: UIViewController, PathwayRouter {
 
 	// The "first" controller shown by default
-	var defaultController: PathwayDestination!
+	public var defaultController: PathwayDestination!
 	// The avaliable destinations
-	var destinations: [PathwayDestination] = []
+	public var destinations: [PathwayDestination] = []
 	
 	// The current destination
-	var currentDestination: PathwayDestination!
-	var transitionInProgress: Bool = false
+	public var currentDestination: PathwayDestination!
+	public var transitionInProgress: Bool = false
 	
-	var destinationControllers: [PathwayDestination: UIViewController] = [:]
+	public var destinationControllers: [PathwayDestination: UIViewController] = [:]
 	
-	override func viewDidLoad() {
+	override open func viewDidLoad() {
 		super.viewDidLoad()
 		currentDestination = defaultController
 		performSegue(withIdentifier: currentDestination.identifier, sender: self)
@@ -65,7 +60,7 @@ class PathViewController: UIViewController, PathwayRouter {
 	// UINavigationController will be the presenting controller.
 	// This is imporant, as the "presenting" controller is what gets added to the container,
 	// where as the "destination" is used to pass information to and from
-	func destinationController(_ viewController: UIViewController) -> UIViewController {
+	open func destinationController(_ viewController: UIViewController) -> UIViewController {
 		guard let controller = viewController as? UINavigationController else {
 			return viewController
 		}
@@ -73,25 +68,25 @@ class PathViewController: UIViewController, PathwayRouter {
 	}
 
 	// Called before the controller is "presented"
-	func willPresent(_ viewController: UIViewController) {
+	open func willPresent(_ viewController: UIViewController) {
 	}
 	
 	// Called after the controller is "presented"
-	func didPresent(_ viewController: UIViewController) {
+	open func didPresent(_ viewController: UIViewController) {
 	}
 	
 	// Called before the controller is "unpresented", but before
 	// "willPresent" is called for the new controller
-	func willUnpresent(_ viewController: UIViewController) {
+	open func willUnpresent(_ viewController: UIViewController) {
 	}
 	
 	// Called after the controller is "unpresented", but before
 	// "didPresent" is called for the new controller
-	func didUnpresent(_ viewController: UIViewController) {
+	open func didUnpresent(_ viewController: UIViewController) {
 	}
 	
 	// Core navigation router
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+	override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		// Only managing execpected routes here
 		guard let destination = destination(for: segue) else {
 			fatalError("No destination found for \(String(describing: segue.identifier))")
@@ -119,17 +114,17 @@ class PathViewController: UIViewController, PathwayRouter {
 	}
 	
 	// Mechanism used to change to a new pathway destination
-	func navigate(to: PathwayDestination) {
+	open func navigate(to: PathwayDestination) {
 		performSegue(withIdentifier: to.identifier, sender: self)
 	}
 	
 	// Swaps to specified destination
-	func swap(to: PathwayDestination) {
+	public func swap(to: PathwayDestination) {
 		swap(from: currentDestination, to: to)
 	}
 	
 	// Swaps from/to the sepcified destinations
-	func swap(from: PathwayDestination, to: PathwayDestination) {
+	public func swap(from: PathwayDestination, to: PathwayDestination) {
 		guard from.identifier != to.identifier else {
 			return
 		}
@@ -152,7 +147,7 @@ class PathViewController: UIViewController, PathwayRouter {
 	}
 
 	// Swaps the physical view controllers
-	func swap(from fromViewController: UIViewController, to toViewController: UIViewController) {
+	public func swap(from fromViewController: UIViewController, to toViewController: UIViewController) {
 		guard !transitionInProgress else {
 			return
 		}
