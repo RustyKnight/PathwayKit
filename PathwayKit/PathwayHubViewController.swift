@@ -11,7 +11,7 @@ import Foundation
 // A contract used to allow child destinations to gain access back to the controlling
 // router
 public protocol DestinationViewController {
-	var hubController: PathwayRouter! { set get }
+	var hubController: PathwayRouter? { set get }
 }
 
 // The Pathway hub controller is intended to be used in situations where the child views
