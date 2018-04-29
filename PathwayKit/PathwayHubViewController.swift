@@ -16,7 +16,7 @@ public protocol DestinationViewController {
 
 // The Pathway hub controller is intended to be used in situations where the child views
 // need to control the navigation
-public class PathwayHubViewController: PathViewController {
+open class PathwayHubViewController: PathViewController {
 	
 	// Oppurtunity to pass information to the controller
 	override open func willPresent(_ viewController: UIViewController) {

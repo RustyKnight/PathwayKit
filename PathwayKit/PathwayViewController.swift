@@ -11,6 +11,10 @@ import Foundation
 // A destination identifer - ie segue
 public struct PathwayDestination: Hashable {
 	let identifier: String
+	
+	open init(identifier: String) {
+		self.identifier = identifier
+	}
 }
 
 // A router between pathways
