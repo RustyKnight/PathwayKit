@@ -12,7 +12,7 @@ import Foundation
 public struct PathwayDestination: Hashable {
 	let identifier: String
 	
-	open init(identifier: String) {
+	public init(identifier: String) {
 		self.identifier = identifier
 	}
 }
