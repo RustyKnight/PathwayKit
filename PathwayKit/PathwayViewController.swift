@@ -9,8 +9,8 @@
 import Foundation
 
 // A destination identifer - ie segue
-public struct PathwayDestination: Hashable {
-	let identifier: String
+@objc public class PathwayDestination: NSObject {
+	@objc let identifier: String
 	
 	public init(identifier: String) {
 		self.identifier = identifier
@@ -18,14 +18,14 @@ public struct PathwayDestination: Hashable {
 }
 
 // A router between pathways
-public protocol PathwayRouter {
-	func navigate(to: PathwayDestination)
+@objc public protocol PathwayRouter {
+	@objc func navigate(to: PathwayDestination)
 }
 
 // The primary pathway view controller, which also acts as the pathway router
 // This is a really good place to start for implementations who wish for the
 // parent view controller to control the navigation
-open class PathViewController: UIViewController, PathwayRouter {
+@objc open class PathViewController: UIViewController, PathwayRouter {
 
 	// The "first" controller shown by default
 	public var defaultController: PathwayDestination!

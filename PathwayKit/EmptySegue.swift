@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class EmptySegue: UIStoryboardSegue {
+@objc public class EmptySegue: UIStoryboardSegue {
 	
 	override public func perform() {
 		
