@@ -34,7 +34,7 @@ open class PathViewController: UIViewController, PathwayRouter {
 	
 	// The current destination
 	public var currentDestination: PathwayDestination!
-	public var transitionInProgress: Bool = false
+	public private(set) var transitionInProgress: Bool = false
 	
 	public var destinationControllers: [PathwayDestination: UIViewController] = [:]
 	
@@ -149,29 +149,53 @@ open class PathViewController: UIViewController, PathwayRouter {
 		currentDestination = to
 		swap(from: currentViewController, to: destinationViewController)
 	}
-
+	
 	// Swaps the physical view controllers
-	public func swap(from fromViewController: UIViewController, to toViewController: UIViewController) {
+	internal func swap(from fromViewController: UIViewController, to toViewController: UIViewController) {
 		guard !transitionInProgress else {
 			return
 		}
 		transitionInProgress = true
-		toViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-		willUnpresent(destinationController(toViewController))
-		fromViewController.willMove(toParentViewController: nil)
-		
-		willPresent(destinationController(toViewController))
-		addChildViewController(toViewController)
-		toViewController.willMove(toParentViewController: self)
-		
-		transition(from: fromViewController, to: toViewController, duration: 1.0, options: .transitionCrossDissolve, animations: {
+		performTranisition(from: fromViewController, to: toViewController) {
+			self.transitionInProgress = false
+		}
+	}
+	
+	// This performs the tranisition.  The drfault implementation calls the performSwap function, which uses
+	// transition(from:to:duration:options:animations:completed) to animate the swap
+	// The function will, "before" set up the incoming and outgoing views
+	// "during" do nothing
+	// "after" remove the out going view and then call "then" to allow the API to perform it's internal clean up
+	open func performTranisition(from fromViewController: UIViewController, to toViewController: UIViewController, then: () -> Void) {
+		performSwap(from: fromViewController, to: toViewController, before: {
+			toViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+			willUnpresent(destinationController(toViewController))
+			fromViewController.willMove(toParentViewController: nil)
 			
-		}) { (completed) in
+			willPresent(destinationController(toViewController))
+			addChildViewController(toViewController)
+			toViewController.willMove(toParentViewController: self)
+		}, during: {
+			
+		}) {
 			fromViewController.removeFromParentViewController()
 			toViewController.didMove(toParentViewController: self)
-			self.transitionInProgress = false
 			self.didUnpresent(self.destinationController(fromViewController))
 			self.didPresent(self.destinationController(toViewController))
+			then()
+		}
+	}
+
+	// This is an oppurtunity to swap out the default animation process
+	// "before" will set up the incoming view controller in it's default location and add it. It will generate the required notifications for both view controllers
+	// "during" is the actions to be carried out during the animation
+	// "after" s the actions to be carried out after the animations, this removes the out going controller and generates the required notifications
+	open func performSwap(from fromViewController: UIViewController, to toViewController: UIViewController, before: () -> Void, during: () -> Void, after: () -> Void) {
+		before()
+		transition(from: fromViewController, to: toViewController, duration: 1.0, options: .transitionCrossDissolve, animations: {
+			during()
+		}) { (completed) in
+			after()
 		}
 	}
 	
