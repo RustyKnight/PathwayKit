@@ -36,6 +36,8 @@ open class PathViewController: UIViewController, PathwayRouter {
 	public var currentDestination: PathwayDestination!
 	public private(set) var transitionInProgress: Bool = false
 	
+	public var transitionAnimationDuration = 0.3
+	
 	public var destinationControllers: [PathwayDestination: UIViewController] = [:]
 	
 	override open func viewDidLoad() {
@@ -157,7 +159,7 @@ open class PathViewController: UIViewController, PathwayRouter {
 		}
 		transitionInProgress = true
 		beforeSwapping(fromViewController, to: toViewController)
-		transition(from: fromViewController, to: toViewController, duration: 1.0, options: .transitionCrossDissolve, animations: {
+		transition(from: fromViewController, to: toViewController, duration: transitionAnimationDuration, options: .transitionCrossDissolve, animations: {
 			self.whileSwapping(from: fromViewController, to: toViewController)
 		}) { (completed) in
 			self.afterSwapping(from: fromViewController, to: toViewController)
