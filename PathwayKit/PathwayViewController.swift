@@ -161,7 +161,7 @@ open class PathViewController: UIViewController, PathwayRouter {
 			self.whileSwapping(from: fromViewController, to: toViewController)
 		}) { (completed) in
 			self.afterSwapping(from: fromViewController, to: toViewController)
-			transitionInProgress = false
+			self.transitionInProgress = false
 		}
 	}
 	
@@ -170,7 +170,7 @@ open class PathViewController: UIViewController, PathwayRouter {
 	open func beforeSwapping(_ currentViewController: UIViewController, to toViewController: UIViewController) {
 		toViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
 		self.willUnpresent(self.destinationController(toViewController))
-		fromViewController.willMove(toParentViewController: nil)
+		currentViewController.willMove(toParentViewController: nil)
 		
 		self.willPresent(self.destinationController(toViewController))
 		self.addChildViewController(toViewController)
