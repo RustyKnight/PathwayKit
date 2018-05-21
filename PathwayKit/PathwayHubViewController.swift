@@ -16,7 +16,7 @@ import Foundation
 
 // The Pathway hub controller is intended to be used in situations where the child views
 // need to control the navigation
-@objc open class PathwayHubViewController: PathViewController {
+@objc open class PathwayHubViewController: PathwayRouterViewController {
 	
 	// Oppurtunity to pass information to the controller
 	override open func willPresent(_ viewController: UIViewController) {

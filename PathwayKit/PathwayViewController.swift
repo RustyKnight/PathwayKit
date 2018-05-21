@@ -9,7 +9,7 @@
 import Foundation
 
 // A destination identifer - ie segue
-@objc public class PathwayDestination: NSObject {
+@objc public class PathwayRoute: NSObject {
 	@objc let identifier: String
 	
 	public init(identifier: String) {
@@ -19,26 +19,26 @@ import Foundation
 
 // A router between pathways
 @objc public protocol PathwayRouter {
-	@objc func navigate(to: PathwayDestination)
+	@objc func navigate(to: PathwayRoute)
 }
 
 // The primary pathway view controller, which also acts as the pathway router
 // This is a really good place to start for implementations who wish for the
 // parent view controller to control the navigation
-@objc open class PathViewController: UIViewController, PathwayRouter {
+@objc open class PathwayRouterViewController: UIViewController, PathwayRouter {
 
 	// The "first" controller shown by default
-	public var defaultController: PathwayDestination!
+	public var defaultController: PathwayRoute!
 	// The avaliable destinations
-	public var destinations: [PathwayDestination] = []
+	public var destinations: [PathwayRoute] = []
 	
 	// The current destination
-	public var currentDestination: PathwayDestination!
+	public var currentDestination: PathwayRoute!
 	public private(set) var transitionInProgress: Bool = false
 	
 	public var transitionAnimationDuration = 0.3
 	
-	public var destinationControllers: [PathwayDestination: UIViewController] = [:]
+	public var destinationControllers: [PathwayRoute: UIViewController] = [:]
 	
 	override open func viewDidLoad() {
 		super.viewDidLoad()
@@ -48,7 +48,7 @@ import Foundation
 	
 	// A reverse lookup mechanism to find a matching destination
 	// from a segue identifier
-	internal func destination(for segue: UIStoryboardSegue) -> PathwayDestination? {
+	internal func destination(for segue: UIStoryboardSegue) -> PathwayRoute? {
 		for destination in destinations {
 			guard destination.identifier == segue.identifier else {
 				continue
@@ -64,7 +64,7 @@ import Foundation
 	// controllers - as generally, you won't be implementing a UINavigationController directly,
 	// but instead, the first controller will be the "destination" controller, but the
 	// UINavigationController will be the presenting controller.
-	// This is imporant, as the "presenting" controller is what gets added to the container,
+	// This is important, as the "presenting" controller is what gets added to the container,
 	// where as the "destination" is used to pass information to and from
 	open func destinationController(_ viewController: UIViewController) -> UIViewController {
 		guard let controller = viewController as? UINavigationController else {
@@ -120,17 +120,17 @@ import Foundation
 	}
 	
 	// Mechanism used to change to a new pathway destination
-	open func navigate(to: PathwayDestination) {
+	open func navigate(to: PathwayRoute) {
 		performSegue(withIdentifier: to.identifier, sender: self)
 	}
 	
 	// Swaps to specified destination
-	public func swap(to: PathwayDestination) {
+	public func swap(to: PathwayRoute) {
 		swap(from: currentDestination, to: to)
 	}
 	
 	// Swaps from/to the sepcified destinations
-	public func swap(from: PathwayDestination, to: PathwayDestination) {
+	public func swap(from: PathwayRoute, to: PathwayRoute) {
 		guard from.identifier != to.identifier else {
 			return
 		}
