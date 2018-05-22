@@ -28,12 +28,20 @@ import Foundation
 @objc open class PathwayRouterViewController: UIViewController, PathwayRouter {
 
 	// The "first" controller shown by default
-	public var defaultController: PathwayRoute!
+	public var defaultRoute: PathwayRoute!
 	// The avaliable destinations
-	public var destinations: [PathwayRoute] = []
+	public var avaliableRoutes: [PathwayRoute] = []
+
+	public var transitionAnimations: UIViewAnimationOptions = [
+		.layoutSubviews,
+		.allowAnimatedContent,
+		.curveEaseInOut,
+		.preferredFramesPerSecond60,
+		.transitionCrossDissolve
+	]
 	
 	// The current destination
-	public var currentDestination: PathwayRoute!
+	public var currentRoute: PathwayRoute!
 	public private(set) var transitionInProgress: Bool = false
 	
 	public var transitionAnimationDuration = 0.3
@@ -42,14 +50,14 @@ import Foundation
 	
 	override open func viewDidLoad() {
 		super.viewDidLoad()
-		currentDestination = defaultController
-		performSegue(withIdentifier: currentDestination.identifier, sender: self)
+		currentRoute = defaultRoute
+		performSegue(withIdentifier: currentRoute.identifier, sender: self)
 	}
 	
 	// A reverse lookup mechanism to find a matching destination
 	// from a segue identifier
 	internal func destination(for segue: UIStoryboardSegue) -> PathwayRoute? {
-		for destination in destinations {
+		for destination in avaliableRoutes {
 			guard destination.identifier == segue.identifier else {
 				continue
 			}
@@ -103,7 +111,7 @@ import Foundation
 		}
 
 		// If this is the first time through, we simply present the "default" controller
-		if segue.identifier == defaultController.identifier && childViewControllers.count == 0 {
+		if segue.identifier == defaultRoute.identifier && childViewControllers.count == 0 {
 			guard let childView = segue.destination.view else {
 				return
 			}
@@ -126,7 +134,7 @@ import Foundation
 	
 	// Swaps to specified destination
 	public func swap(to: PathwayRoute) {
-		swap(from: currentDestination, to: to)
+		swap(from: currentRoute, to: to)
 	}
 	
 	// Swaps from/to the sepcified destinations
@@ -148,7 +156,7 @@ import Foundation
 			destinationViewController = parent
 		}
 		
-		currentDestination = to
+		currentRoute = to
 		swap(from: currentViewController, to: destinationViewController)
 	}
 	
@@ -159,7 +167,8 @@ import Foundation
 		}
 		transitionInProgress = true
 		beforeSwapping(fromViewController, to: toViewController)
-		transition(from: fromViewController, to: toViewController, duration: transitionAnimationDuration, options: .transitionCrossDissolve, animations: {
+		
+		transition(from: fromViewController, to: toViewController, duration: transitionAnimationDuration, options: transitionAnimations, animations: {
 			self.whileSwapping(from: fromViewController, to: toViewController)
 		}) { (completed) in
 			self.afterSwapping(from: fromViewController, to: toViewController)
