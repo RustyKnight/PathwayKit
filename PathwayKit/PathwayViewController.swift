@@ -50,6 +50,11 @@ import Foundation
 	
 	override open func viewDidLoad() {
 		super.viewDidLoad()
+	}
+	
+	// Getting the first route up is different from swapping them
+	// probably should allow current route to be optional :/
+	open func presentInitialPathway() {
 		currentRoute = defaultRoute
 		performSegue(withIdentifier: currentRoute.identifier, sender: self)
 	}
