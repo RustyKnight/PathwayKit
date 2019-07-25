@@ -10,7 +10,7 @@
 		122785C7209676E6009EDD25 /* PathwayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 122785BD209676E6009EDD25 /* PathwayKit.framework */; };
 		122785CC209676E6009EDD25 /* PathwayKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122785CB209676E6009EDD25 /* PathwayKitTests.swift */; };
 		122785CE209676E6009EDD25 /* PathwayKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 122785C0209676E6009EDD25 /* PathwayKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		122785D820967704009EDD25 /* EmptySegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122785D720967704009EDD25 /* EmptySegue.swift */; };
+		122785D820967704009EDD25 /* PathwaySegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122785D720967704009EDD25 /* PathwaySegue.swift */; };
 		122785DA2096771B009EDD25 /* PathwayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122785D92096771B009EDD25 /* PathwayViewController.swift */; };
 		122785DC20967A95009EDD25 /* PathwayHubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122785DB20967A95009EDD25 /* PathwayHubViewController.swift */; };
 /* End PBXBuildFile section */
@@ -32,7 +32,7 @@
 		122785C6209676E6009EDD25 /* PathwayKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathwayKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		122785CB209676E6009EDD25 /* PathwayKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathwayKitTests.swift; sourceTree = "<group>"; };
 		122785CD209676E6009EDD25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		122785D720967704009EDD25 /* EmptySegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySegue.swift; sourceTree = "<group>"; };
+		122785D720967704009EDD25 /* PathwaySegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathwaySegue.swift; sourceTree = "<group>"; };
 		122785D92096771B009EDD25 /* PathwayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathwayViewController.swift; sourceTree = "<group>"; };
 		122785DB20967A95009EDD25 /* PathwayHubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathwayHubViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,7 +79,7 @@
 			children = (
 				122785C0209676E6009EDD25 /* PathwayKit.h */,
 				122785C1209676E6009EDD25 /* Info.plist */,
-				122785D720967704009EDD25 /* EmptySegue.swift */,
+				122785D720967704009EDD25 /* PathwaySegue.swift */,
 				122785D92096771B009EDD25 /* PathwayViewController.swift */,
 				122785DB20967A95009EDD25 /* PathwayHubViewController.swift */,
 			);
@@ -205,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				122785DC20967A95009EDD25 /* PathwayHubViewController.swift in Sources */,
-				122785D820967704009EDD25 /* EmptySegue.swift in Sources */,
+				122785D820967704009EDD25 /* PathwaySegue.swift in Sources */,
 				122785DA2096771B009EDD25 /* PathwayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
