@@ -1,5 +1,5 @@
 //
-//  EmptySegue.swift
+//  PathwaySegue.swift
 //  PathwayKit
 //
 //  Created by Shane Whitehead on 30/4/18.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc public class PathwaySegue: UIStoryboardSegue {
 	

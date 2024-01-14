@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // A contract used to allow child destinations to gain access back to the controlling
 // router
